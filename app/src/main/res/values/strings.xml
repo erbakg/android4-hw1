@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">android4-1</string>
+    <string name="title_home">Home</string>
+    <string name="home_text">Your Notes:</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="notes_fragment_text">New note:</string>
+    <string name="notes_fragment_title">Title</string>
+    <string name="notes_fragment_description">Description</string>
+    <string name="notes_fragment_btn">Add</string>
+</resources>
