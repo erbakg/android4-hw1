@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android4_1.databinding.FragmentHomeBinding
+import com.example.android4_1.ui.home.view_pager.ViewPagerHomeAdapter
 import com.example.android4_1.ui.note.Note
-import com.example.android4_1.ui.note.NoteItemAdapter
 import com.example.android4_1.ui.note.NotesViewModel
+import com.google.android.material.tabs.TabLayoutMediator
 import java.time.LocalDate
 
 class HomeFragment : Fragment() {
@@ -43,18 +43,18 @@ class HomeFragment : Fragment() {
 
     private fun setRecyclerView() {
 
-        notesViewModel.notesList.observe(viewLifecycleOwner) {
-            binding.rvNotes.apply {
-                layoutManager = LinearLayoutManager(context)
-                adapter = NoteItemAdapter(it)
-            }
-        }
+
     }
 
     private fun initListiners() {
-        binding.btnAddNote.setOnClickListener() {
-           notesViewModel.addNoteItem(Note("","", LocalDate.now()))
-        }
+        binding.homeViewPager.adapter = ViewPagerHomeAdapter(childFragmentManager, lifecycle)
+        TabLayoutMediator(binding.homeTabLayout, binding.homeViewPager) { tab, position ->
+           tab.text = when (position) {
+                0 -> "All tasks"
+                1 -> "In progress"
+                else -> "Done"
+            }
+        }.attach()
 
     }
 

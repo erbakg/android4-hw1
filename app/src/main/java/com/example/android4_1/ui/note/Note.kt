@@ -7,6 +7,8 @@ class Note(
     var title: String,
     var description: String,
     var date: LocalDate,
+    var inProgress:Boolean,
+    var done: Boolean,
     var id: UUID = UUID.randomUUID(),
 
 )

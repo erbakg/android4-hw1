@@ -9,6 +9,7 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.example.android4_1.App
 import com.example.android4_1.databinding.FragmentNoteBinding
 import java.time.LocalDate
 import java.util.UUID
@@ -39,6 +40,11 @@ class NoteFragment : Fragment() {
         binding.tvDesc.setText(desc)
         binding.btnAdd.setOnClickListener {
             notesViewModel.updateNoteItem(UUID.fromString(id), binding.tvTitle.text.toString(), binding.tvDesc.text.toString())
+            notesViewModel.notesList.observe(viewLifecycleOwner) {
+                if (it != null) {
+                    (requireContext().applicationContext as App).mySharedPreferense?.saveNotes(it)
+                }
+            }
             saveNotes()
         }
 
