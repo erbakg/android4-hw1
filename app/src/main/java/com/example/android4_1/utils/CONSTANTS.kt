@@ -6,4 +6,5 @@ object CONSTANTS {
   const val PROFILE_NAME = "profile_name"
   const val PROFILE_LOGIN = "profile_login"
   const val PROFILE_AVATAR = "profile_avatar"
+  const val ONBOARDING_SHOWN = "onboarding_shown"
 }

@@ -2,7 +2,6 @@ package com.example.android4_1.utils
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 import com.example.android4_1.ui.note.Note
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -10,6 +9,17 @@ import com.google.gson.reflect.TypeToken
 class MySharedPreferences(val context: Context) {
     private val sharedPreferences: SharedPreferences =
         context.getSharedPreferences(CONSTANTS.APP_DATA, Context.MODE_PRIVATE)
+
+    fun setOnboardingShown() {
+        sharedPreferences
+            .edit()
+            .putBoolean(CONSTANTS.ONBOARDING_SHOWN, true)
+            .apply()
+    }
+
+    fun getOnboardingShownStatus(): Boolean? {
+        return sharedPreferences.getBoolean(CONSTANTS.ONBOARDING_SHOWN, false)
+    }
 
     fun saveNotes(list: List<Note>) {
         val convertedData = Gson().toJson(list)
@@ -46,6 +56,7 @@ class MySharedPreferences(val context: Context) {
             null
         }
     }
+
     fun saveLogin(login: String) {
         sharedPreferences
             .edit()
@@ -62,6 +73,7 @@ class MySharedPreferences(val context: Context) {
             null
         }
     }
+
     fun saveAvatar(url: String) {
         sharedPreferences
             .edit()
@@ -72,7 +84,7 @@ class MySharedPreferences(val context: Context) {
     fun getSavedAvatar(): String? {
         val savedAvatar = sharedPreferences.getString(CONSTANTS.PROFILE_AVATAR, "default")
 
-        return if (savedAvatar!= "default") {
+        return if (savedAvatar != "default") {
             savedAvatar
         } else {
             null

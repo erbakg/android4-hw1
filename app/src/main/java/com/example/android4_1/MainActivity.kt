@@ -1,9 +1,11 @@
 package com.example.android4_1
 
 import android.os.Bundle
+import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
@@ -31,5 +33,25 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        initListener()
+    }
+
+    private fun initListener() {
+        this.findNavController(R.id.nav_host_fragment_activity_main)
+            .addOnDestinationChangedListener { controller, destination, arguments ->
+                if (destination.id == R.id.onboardingFragment) {
+                    this.supportActionBar?.hide()
+                    binding.navView.visibility = View.GONE
+                } else if (destination.id == R.id.noteFragment) {
+                    binding.navView.visibility = View.GONE
+                } else {
+                    binding.navView.visibility = View.VISIBLE
+                }
+            }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = this.findNavController(R.id.nav_host_fragment_activity_main)
+        return navController.navigateUp()
     }
 }

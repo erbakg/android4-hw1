@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_navigation_home_to_noteFragment"
             app:destination="@id/noteFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_onboardingFragment"
+            app:destination="@id/onboardingFragment" />
     </fragment>
 
     <fragment
@@ -40,4 +43,9 @@
         android:name="com.example.android4_1.ui.edit_profile.EditProfileFragment"
         android:label="@string/title_edit_profile"
         tools:layout="@layout/fragment_edit_pofile" />
+    <fragment
+        android:id="@+id/onboardingFragment"
+        android:name="com.example.android4_1.ui.onboarding.OnboardingFragment"
+        android:label="fragment_onboarding"
+        tools:layout="@layout/fragment_onboarding" />
 </navigation>

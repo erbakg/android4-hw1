@@ -6,10 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
+import com.example.android4_1.App
+import com.example.android4_1.R
 import com.example.android4_1.databinding.FragmentHomeBinding
 import com.example.android4_1.ui.home.view_pager.ViewPagerHomeAdapter
 import com.example.android4_1.ui.note.Note
 import com.example.android4_1.ui.note.NotesViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayoutMediator
 import java.time.LocalDate
 
@@ -37,19 +43,25 @@ class HomeFragment : Fragment() {
         val activity = requireActivity()
         notesViewModel =
             ViewModelProvider(activity).get(NotesViewModel::class.java)
+        initOnboarding()
         initListiners()
-        setRecyclerView()
     }
 
-    private fun setRecyclerView() {
-
-
+    private fun initOnboarding() {
+        val onboardingIsShown =
+            (requireContext().applicationContext as App).mySharedPreferense?.getOnboardingShownStatus()
+        if (onboardingIsShown == true) {
+            return
+        } else {
+            findNavController().navigate(R.id.action_navigation_home_to_onboardingFragment)
+        }
     }
+
 
     private fun initListiners() {
         binding.homeViewPager.adapter = ViewPagerHomeAdapter(childFragmentManager, lifecycle)
         TabLayoutMediator(binding.homeTabLayout, binding.homeViewPager) { tab, position ->
-           tab.text = when (position) {
+            tab.text = when (position) {
                 0 -> "All tasks"
                 1 -> "In progress"
                 else -> "Done"

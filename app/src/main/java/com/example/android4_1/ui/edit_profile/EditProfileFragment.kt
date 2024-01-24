@@ -36,20 +36,28 @@ class EditProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val name = arguments?.getString(EditProfileFragment.NAME_KEY)
         val login = arguments?.getString(EditProfileFragment.LOGIN_KEY)
-        val avatar = (requireContext().applicationContext as App).mySharedPreferense?.getSavedAvatar()
-
-        binding.etProfileName.setText(name)
-        binding.etProfileLogin.setText(login)
+        val avatar =
+            (requireContext().applicationContext as App).mySharedPreferense?.getSavedAvatar()
+        if (name == "Enter name") {
+            binding.etProfileName.setText("")
+        } else {
+            binding.etProfileName.setText(name)
+        }
+        if (login == "Enter login") {
+            binding.etProfileLogin.setText("")
+        } else {
+            binding.etProfileLogin.setText(login)
+        }
         Glide.with(this).load(avatar).circleCrop().into(binding.ivProfile);
         initListeners()
     }
 
     private fun initListeners() {
-        binding.btnEditProfileAvatar.setOnClickListener{
+        binding.btnEditProfileAvatar.setOnClickListener {
             val pickImg = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
             changeImage.launch(pickImg)
         }
-        binding.btnSaveProfile.setOnClickListener{
+        binding.btnSaveProfile.setOnClickListener {
             (requireContext().applicationContext as App).mySharedPreferense?.saveName(binding.etProfileName.text.toString())
             (requireContext().applicationContext as App).mySharedPreferense?.saveLogin(binding.etProfileLogin.text.toString())
         }
