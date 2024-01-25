@@ -1,14 +1,18 @@
-package com.example.android4_1.ui.note
+package com.example.android4_1.models
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.time.LocalDate
 import java.util.UUID
 
-class Note(
+@Entity
+data class Note(
     var title: String,
     var description: String,
-    var date: LocalDate,
+    var date: String,
     var inProgress:Boolean,
     var done: Boolean,
+    @PrimaryKey()
     var id: UUID = UUID.randomUUID(),
 
 )

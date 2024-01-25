@@ -2,6 +2,7 @@ package com.example.android4_1.ui.note
 
 import android.content.Context
 import android.graphics.Paint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android4_1.R
 import com.example.android4_1.databinding.ItemNoteBinding
+import com.example.android4_1.models.Note
 import com.example.android4_1.ui.home.view_pager.OnNoteItemClick
 
 
@@ -62,17 +64,17 @@ class ViewHolder(
 ) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(noteItem: Note, position: Int, onNoteItemClick: OnNoteItemClick) {
-
-
         binding.tvNumber.text = (position + 1).toString()
-        binding.tvTitle.setText(noteItem.title)
-        binding.tvDesc.setText(noteItem.description)
+        binding.tvTitle.text = noteItem.title
+        binding.tvDesc.text = noteItem.description
 
         if (!noteItem.done && !noteItem.inProgress) {
             binding.btnToProgress.setImageResource(R.drawable.ic_start_24)
         } else if (noteItem.inProgress) {
+            Log.d("haha", "bind: "+ noteItem.title.toString())
             binding.btnToProgress.setImageResource(R.drawable.ic_done_all_24)
         } else {
+            Log.d("haha", "bind: "+ noteItem.title.toString())
             binding.btnToProgress.visibility = View.GONE
             binding.tvTitle.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG)
             binding.tvDesc.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG)

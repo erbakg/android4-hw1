@@ -2,7 +2,7 @@ package com.example.android4_1.utils
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.example.android4_1.ui.note.Note
+import com.example.android4_1.models.Note
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -19,25 +19,6 @@ class MySharedPreferences(val context: Context) {
 
     fun getOnboardingShownStatus(): Boolean? {
         return sharedPreferences.getBoolean(CONSTANTS.ONBOARDING_SHOWN, false)
-    }
-
-    fun saveNotes(list: List<Note>) {
-        val convertedData = Gson().toJson(list)
-        sharedPreferences
-            .edit()
-            .putString(CONSTANTS.NOTES_LIST, convertedData)
-            .apply()
-    }
-
-    fun getSavedNotes(): List<Note>? {
-        val savedNotes = sharedPreferences.getString(CONSTANTS.NOTES_LIST, "default")
-        val type = object : TypeToken<List<Note>>() {}.type
-
-        return if (savedNotes != "default") {
-            Gson().fromJson(savedNotes, type);
-        } else {
-            null
-        }
     }
 
     fun saveName(name: String) {

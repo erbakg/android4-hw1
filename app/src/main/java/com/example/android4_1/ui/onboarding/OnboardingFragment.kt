@@ -1,19 +1,16 @@
 package com.example.android4_1.ui.onboarding
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.Fragment
 import com.example.android4_1.App
-import com.example.android4_1.R
-import com.example.android4_1.databinding.FragmentHomeBinding
 import com.example.android4_1.databinding.FragmentOnboardingBinding
-import com.example.android4_1.ui.home.view_pager.ViewPagerHomeAdapter
 import com.example.android4_1.ui.onboarding.view_pager.ViewPagerOnboardingAdapter
 import com.google.android.material.tabs.TabLayoutMediator
+
 
 class OnboardingFragment : Fragment() {
     private var _binding: FragmentOnboardingBinding? = null
@@ -51,7 +48,9 @@ class OnboardingFragment : Fragment() {
 
         binding.btnSkip.setOnClickListener {
             (requireContext().applicationContext as App).mySharedPreferense?.setOnboardingShown()
-            findNavController().navigateUp()
+            val intent =  requireActivity().intent
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            startActivity(intent)
         }
     }
 

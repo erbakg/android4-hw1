@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.android4_1.App
 import com.example.android4_1.databinding.FragmentEditPofileBinding
@@ -60,6 +61,7 @@ class EditProfileFragment : Fragment() {
         binding.btnSaveProfile.setOnClickListener {
             (requireContext().applicationContext as App).mySharedPreferense?.saveName(binding.etProfileName.text.toString())
             (requireContext().applicationContext as App).mySharedPreferense?.saveLogin(binding.etProfileLogin.text.toString())
+            findNavController().navigateUp()
         }
     }
 

@@ -10,7 +10,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.android4_1.App
+import com.example.android4_1.data.NoteManager
 import com.example.android4_1.databinding.FragmentNoteBinding
+import com.example.android4_1.models.Note
 import java.time.LocalDate
 import java.util.UUID
 
@@ -18,8 +20,6 @@ class NoteFragment : Fragment() {
 
     private var _binding: FragmentNoteBinding? = null
     private val binding get() = _binding!!
-    private lateinit var notesViewModel: NotesViewModel
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,8 +30,6 @@ class NoteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val activity = requireActivity()
-        notesViewModel = ViewModelProvider(activity).get(NotesViewModel::class.java)
         val id = arguments?.getString(ID_KEY)
         val date = arguments?.getString(DATE_KEY)
         val title = arguments?.getString(TITLE_KEY)
@@ -39,18 +37,22 @@ class NoteFragment : Fragment() {
         binding.tvTitle.setText(title)
         binding.tvDesc.setText(desc)
         binding.btnAdd.setOnClickListener {
-            notesViewModel.updateNoteItem(UUID.fromString(id), binding.tvTitle.text.toString(), binding.tvDesc.text.toString())
-            notesViewModel.notesList.observe(viewLifecycleOwner) {
-                if (it != null) {
-                    (requireContext().applicationContext as App).mySharedPreferense?.saveNotes(it)
-                }
-            }
-            saveNotes()
+            NoteManager.dao.updateNoteItem(
+                Note(
+                    title = binding.tvTitle.text.toString(),
+                    description = binding.tvDesc.text.toString(),
+                    id = UUID.fromString(id),
+                    date = LocalDate.now().toString(),
+                    done = false,
+                    inProgress = false,
+                )
+            )
+            navigateUp()
         }
 
     }
 
-    private fun saveNotes() {
+    private fun navigateUp() {
         findNavController().navigateUp()
     }
 
