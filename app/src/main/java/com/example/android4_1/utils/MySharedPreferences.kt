@@ -2,9 +2,6 @@ package com.example.android4_1.utils
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.example.android4_1.models.Note
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 
 class MySharedPreferences(val context: Context) {
     private val sharedPreferences: SharedPreferences =

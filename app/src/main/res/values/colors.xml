@@ -10,4 +10,6 @@
     <color name="teal">#03dac5</color>
     <color name="grey_border">#C7CDC9</color>
     <color name="grey_text">#808080</color>
+    <color name="red">#ba000d</color>
+    <color name="green">#4CAF50</color>
 </resources>

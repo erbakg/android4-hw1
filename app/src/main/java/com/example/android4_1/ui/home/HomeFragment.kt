@@ -5,21 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.android4_1.App
 import com.example.android4_1.R
+import com.example.android4_1.data.DatabaseManager
+import com.example.android4_1.data.entities.Note
+import com.example.android4_1.data.entities.Project
 import com.example.android4_1.databinding.FragmentHomeBinding
-import com.example.android4_1.ui.home.view_pager.ViewPagerHomeAdapter
-import com.google.android.material.tabs.TabLayoutMediator
-
+import com.example.android4_1.ui.bottom_sheet.BottomSheetFragment
+import java.time.LocalDateTime
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+    private val projectAdapter = ProjectAdapter(itemUpdated = this::itemUpdated)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,7 +32,9 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initListiners()
+        initListeners()
+        initData()
+        initViews()
         initOnboarding()
     }
 
@@ -47,21 +48,46 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun initViews() {
+        binding.rvProjectGroup.adapter = projectAdapter
+    }
 
-    private fun initListiners() {
-        binding.homeViewPager.adapter = ViewPagerHomeAdapter(childFragmentManager, lifecycle)
-        TabLayoutMediator(binding.homeTabLayout, binding.homeViewPager) { tab, position ->
-            tab.text = when (position) {
-                0 -> "All tasks"
-                1 -> "In progress"
-                else -> "Done"
+    private fun initData() {
+        val projectDao = DatabaseManager.projectDao
+        val projects = projectDao.getProjects()
+        if (projects.size == 0) {
+            val resourceId = R.drawable.app_features_onboarding
+            projectDao.add(
+                Project(
+                    projectName = "To Do",
+                    projectDate = LocalDateTime.now().toString(),
+                    projectImg = "android.resource://${context?.packageName}/$resourceId"
+                )
+            )
+        }
+    }
+
+    private fun initListeners() {
+        binding.btnAddNote.setOnClickListener {
+            val modal = BottomSheetFragment()
+            fragmentManager.let {
+                if (it != null) {
+                    modal.show(it, BottomSheetFragment.TAG)
+                }
             }
-        }.attach()
+        }
+        DatabaseManager.projectDao.getProjectsWithNotes().observe(viewLifecycleOwner) { data ->
+            projectAdapter.submitList(data)
+        }
 
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun itemUpdated(note: Note) {
+        DatabaseManager.noteDao.updateNoteItem(note)
     }
 }
