@@ -17,4 +17,8 @@
     <string name="profile_login_hint">Enter your login</string>
     <string name="project_name_hint">Enter name of project</string>
     <string name="project_date_hint">Choose the end of project</string>
+    <!-- Bottom sheet project types -->
+    <string name="project_types_home">Home</string>
+    <string name="project_types_work">Work</string>
+    <string name="project_types_school">School</string>
 </resources>

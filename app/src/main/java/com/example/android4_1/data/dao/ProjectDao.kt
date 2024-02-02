@@ -7,8 +7,11 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
+import com.example.android4_1.data.entities.Note
+import com.example.android4_1.data.entities.NoteTypes
 import com.example.android4_1.data.entities.Project
 import com.example.android4_1.data.entities.ProjectAndNotes
+import com.example.android4_1.data.entities.ProjectTypes
 
 @Dao
 interface ProjectDao {
@@ -27,4 +30,6 @@ interface ProjectDao {
     @Transaction
     @Query("SELECT * FROM project")
     fun getProjectsWithNotes():LiveData<List<ProjectAndNotes>>
+    @Query("SELECT * FROM project WHERE project_type=:projectTypes")
+    fun getProjectsByType(projectTypes: ProjectTypes): LiveData<List<ProjectAndNotes>>
 }

@@ -9,17 +9,17 @@ import androidx.navigation.fragment.findNavController
 import com.example.android4_1.App
 import com.example.android4_1.R
 import com.example.android4_1.data.DatabaseManager
-import com.example.android4_1.data.entities.Note
 import com.example.android4_1.data.entities.Project
+import com.example.android4_1.data.entities.ProjectTypes
 import com.example.android4_1.databinding.FragmentHomeBinding
 import com.example.android4_1.ui.bottom_sheet.BottomSheetFragment
+import com.example.android4_1.ui.home.pager_view.ViewPagerHomeAdapter
+import com.google.android.material.tabs.TabLayoutMediator
 import java.time.LocalDateTime
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private val projectAdapter = ProjectAdapter(itemUpdated = this::itemUpdated)
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,7 +34,6 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initListeners()
         initData()
-        initViews()
         initOnboarding()
     }
 
@@ -48,10 +47,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun initViews() {
-        binding.rvProjectGroup.adapter = projectAdapter
-    }
-
     private fun initData() {
         val projectDao = DatabaseManager.projectDao
         val projects = projectDao.getProjects()
@@ -61,7 +56,8 @@ class HomeFragment : Fragment() {
                 Project(
                     projectName = "To Do",
                     projectDate = LocalDateTime.now().toString(),
-                    projectImg = "android.resource://${context?.packageName}/$resourceId"
+                    projectImg = "android.resource://${context?.packageName}/$resourceId",
+                    projectType = ProjectTypes.HOME,
                 )
             )
         }
@@ -76,18 +72,18 @@ class HomeFragment : Fragment() {
                 }
             }
         }
-        DatabaseManager.projectDao.getProjectsWithNotes().observe(viewLifecycleOwner) { data ->
-            projectAdapter.submitList(data)
-        }
-
+        binding.homeViewPager.adapter = ViewPagerHomeAdapter(childFragmentManager, lifecycle)
+        TabLayoutMediator(binding.homeTabLayout, binding.homeViewPager) { tab, position ->
+            tab.text = when (position) {
+                0 -> "Home"
+                1 -> "Work"
+                else -> "School"
+            }
+        }.attach()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun itemUpdated(note: Note) {
-        DatabaseManager.noteDao.updateNoteItem(note)
     }
 }

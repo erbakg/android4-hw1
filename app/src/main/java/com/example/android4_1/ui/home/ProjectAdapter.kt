@@ -1,5 +1,6 @@
 package com.example.android4_1.ui.home
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import com.example.android4_1.R
 import com.example.android4_1.data.entities.Note
+import com.example.android4_1.data.entities.NoteTypes
 import com.example.android4_1.data.entities.ProjectAndNotes
 import com.example.android4_1.databinding.ItemProjectGroupBinding
 import java.text.SimpleDateFormat
@@ -94,16 +96,18 @@ class ProjectAdapter(
                 tvProjectName.text = project.project.projectName
                 tvProjectDate.text =
                     LocalDateTime.parse(project.project.projectDate).format(formatter).toString()
+
+                tvProjectProgress.text = getProjectProgress(project.noteList)
                 val dateIsGone = dateIsGone(d1 = project.project.projectDate)
                 if (dateIsGone) {
-                    tvProjectDate.setTextColor(
+                    tvProjectProgress.setTextColor(
                         ContextCompat.getColor(
                             binding.root.context,
                             R.color.red
                         )
                     )
                 } else {
-                    tvProjectDate.setTextColor(
+                    tvProjectProgress.setTextColor(
                         ContextCompat.getColor(
                             binding.root.context,
                             R.color.green
@@ -115,6 +119,13 @@ class ProjectAdapter(
                 val adapter = binding.rvNotes.adapter as NotesAdapter
                 adapter.submitList(project.noteList)
             }
+        }
+
+        private fun getProjectProgress(list: List<Note>): String {
+            val countOfDone = list.count { it.type == NoteTypes.DONE }
+            val percentage = (countOfDone.toDouble() / list.size.toDouble()) * 100
+            Log.d("haha", "getProjectProgress: ${countOfDone} ${list.size / 100} ${percentage}")
+            return if (percentage.isNaN()) "0.0%" else "$percentage%"
         }
     }
 }

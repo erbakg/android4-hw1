@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="project_types_array">
+        <item>@string/project_types_home</item>
+        <item>@string/project_types_work</item>
+        <item>@string/project_types_school</item>
+    </string-array>
+</resources>

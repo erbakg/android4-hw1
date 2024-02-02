@@ -12,12 +12,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
 import com.example.android4_1.App
 import com.example.android4_1.R
 import com.example.android4_1.data.DatabaseManager
 import com.example.android4_1.data.entities.Project
+import com.example.android4_1.data.entities.ProjectTypes
 import com.example.android4_1.databinding.FragmentBottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -29,6 +33,7 @@ import java.util.Calendar
 class BottomSheetFragment : BottomSheetDialogFragment() {
     private var selectedDate: LocalDateTime? = null
     private var selectedAvatar: String? = null
+    private var selectedPosition: Int? = null
     private var _binding: FragmentBottomSheetBinding? = null
     private val binding get() = _binding!!
 
@@ -44,6 +49,32 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setListeners()
+        initViews()
+    }
+
+    private fun initViews() {
+        val adapter =
+            context?.let {
+                ArrayAdapter(
+                    it,
+                    android.R.layout.simple_spinner_dropdown_item,
+                    it.resources.getStringArray(R.array.project_types_array)
+                )
+            }
+        binding.spinner.adapter = adapter
+        binding.spinner.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View, position: Int, id: Long
+            ) {
+                selectedPosition = position
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // write code to perform some action
+            }
+        }
     }
 
     private fun setListeners() {
@@ -71,7 +102,17 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
             val project = Project(
                 projectName = binding.etProjectName.text.toString(),
                 projectDate = selectedDate.toString(),
-                projectImg = selectedAvatar ?: "android.resource://${context?.packageName}/$resourceId"
+                projectImg = selectedAvatar
+                    ?: "android.resource://${context?.packageName}/$resourceId",
+                projectType = when(selectedPosition) {
+                    0 -> ProjectTypes.HOME
+                    1 -> ProjectTypes.WORK
+                    2 -> ProjectTypes.SCHOOL
+                    else -> {
+                        Toast.makeText(context, "Please select project type", Toast.LENGTH_SHORT)
+                        null
+                    }
+                }
             )
             DatabaseManager.projectDao.add(project)
             dialog?.hide()
@@ -91,7 +132,9 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
                     inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0)
                 }
 
-                else -> { false}
+                else -> {
+                    false
+                }
             }
 
         }

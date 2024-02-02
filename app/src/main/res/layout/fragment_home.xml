@@ -6,13 +6,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.home.HomeFragment">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_project_group"
+    <com.google.android.material.tabs.TabLayout
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/home_tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_project_group" />
+        android:layout_height="wrap_content"
+        app:tabGravity="center"
+        app:tabTextColor="@color/black"
+        android:padding="0dp"/>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/home_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <Button
         android:id="@+id/btn_add_note"

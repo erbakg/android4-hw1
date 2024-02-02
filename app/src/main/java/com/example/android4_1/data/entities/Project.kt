@@ -15,4 +15,13 @@ data class Project(
     val projectName: String,
     val projectDate: String,
     val projectImg: String,
+    @ColumnInfo("project_type")
+    val projectType: ProjectTypes?
 )
+
+
+enum class ProjectTypes() {
+    HOME,
+    WORK,
+    SCHOOL
+}
