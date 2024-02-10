@@ -136,7 +136,6 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
                     false
                 }
             }
-
         }
 
     }

@@ -10,9 +10,6 @@
         android:name="com.example.android4_1.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_navigation_home_to_onboardingFragment"
-            app:destination="@id/onboardingFragment" />
     </fragment>
 
     <fragment
@@ -48,5 +45,11 @@
         android:id="@+id/onboardingFragment"
         android:name="com.example.android4_1.ui.onboarding.OnboardingFragment"
         android:label="fragment_onboarding"
-        tools:layout="@layout/fragment_onboarding" />
+        tools:layout="@layout/fragment_onboarding" >
+    </fragment>
+    <fragment
+        android:id="@+id/registrationFragment"
+        android:name="com.example.android4_1.ui.auth.AuthFragment"
+        android:label="fragment_registration"
+        tools:layout="@layout/fragment_auth" />
 </navigation>

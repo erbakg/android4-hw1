@@ -7,6 +7,16 @@ class MySharedPreferences(val context: Context) {
     private val sharedPreferences: SharedPreferences =
         context.getSharedPreferences(CONSTANTS.APP_DATA, Context.MODE_PRIVATE)
 
+    fun setUserAuth(bool: Boolean) {
+        sharedPreferences
+            .edit()
+            .putBoolean(CONSTANTS.USER_AUTHED, bool)
+            .apply()
+    }
+
+    fun getUserAuthed(): Boolean? {
+        return sharedPreferences.getBoolean(CONSTANTS.USER_AUTHED, false)
+    }
     fun setOnboardingShown() {
         sharedPreferences
             .edit()

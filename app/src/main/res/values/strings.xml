@@ -21,4 +21,12 @@
     <string name="project_types_home">Home</string>
     <string name="project_types_work">Work</string>
     <string name="project_types_school">School</string>
+    <!-- Drawer strings -->
+    <string name="drawer_menu_open">Open</string>
+    <string name="drawer_menu_close">Close</string>
+    <!-- Auth -->
+    <string name="auth_sign_up_btn">Sign Up</string>
+    <string name="auth_sign_in_btn">Sign In</string>
+    <string name="auth_login_hint">Enter your login</string>
+    <string name="auth_password_hint">Enter your password</string>
 </resources>

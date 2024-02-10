@@ -5,8 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import com.example.android4_1.App
 import com.example.android4_1.R
 import com.example.android4_1.data.DatabaseManager
 import com.example.android4_1.data.entities.Project
@@ -16,6 +14,7 @@ import com.example.android4_1.ui.bottom_sheet.BottomSheetFragment
 import com.example.android4_1.ui.home.pager_view.ViewPagerHomeAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import java.time.LocalDateTime
+
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
@@ -34,19 +33,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initListeners()
         initData()
-        initOnboarding()
     }
-
-    private fun initOnboarding() {
-        val onboardingIsShown =
-            (requireContext().applicationContext as App).mySharedPreferense?.getOnboardingShownStatus()
-        if (onboardingIsShown == true) {
-            return
-        } else {
-            findNavController().navigate(R.id.action_navigation_home_to_onboardingFragment)
-        }
-    }
-
     private fun initData() {
         val projectDao = DatabaseManager.projectDao
         val projects = projectDao.getProjects()
