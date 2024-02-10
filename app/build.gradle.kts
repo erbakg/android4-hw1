@@ -68,4 +68,8 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     //google auth
     implementation("com.google.android.gms:play-services-auth:20.7.0")
+    //messaging
+    implementation("com.google.firebase:firebase-messaging:23.4.1")
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
+    implementation("androidx.activity:activity-ktx:1.8.2")
 }

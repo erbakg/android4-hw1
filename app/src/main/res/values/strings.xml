@@ -29,4 +29,8 @@
     <string name="auth_sign_in_btn">Sign In</string>
     <string name="auth_login_hint">Enter your login</string>
     <string name="auth_password_hint">Enter your password</string>
+    <!-- Notification -->
+    <string name="channel_name">Channel name</string>
+    <string name="channel_description">CHANNEL Description</string>
+    <string name="channel_id">DEFAULT_CHANNEL_ID</string>
 </resources>
