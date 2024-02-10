@@ -20,9 +20,6 @@ import com.example.android4_1.ui.note.NoteFragment
 class EditProfileFragment : Fragment() {
 
     private var _binding: FragmentEditPofileBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,8 +56,9 @@ class EditProfileFragment : Fragment() {
             changeImage.launch(pickImg)
         }
         binding.btnSaveProfile.setOnClickListener {
-            (requireContext().applicationContext as App).mySharedPreferense?.saveName(binding.etProfileName.text.toString())
-            (requireContext().applicationContext as App).mySharedPreferense?.saveLogin(binding.etProfileLogin.text.toString())
+            val myPrefs = (requireContext().applicationContext as App).mySharedPreferense
+            myPrefs?.saveName(binding.etProfileName.text.toString())
+            myPrefs?.saveLogin(binding.etProfileLogin.text.toString())
             findNavController().navigateUp()
         }
     }

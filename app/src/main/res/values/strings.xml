@@ -3,9 +3,10 @@
     <string name="title_home">Home</string>
     <string name="title_profile">Profile</string>
     <string name="title_edit_profile">Edit Profile</string>
-    <string name="title_notification">Notification</string>
+    <string name="title_notes_list">Notes List</string>
     <string name="notes_fragment_text">New note:</string>
     <string name="notes_fragment_title">Title</string>
+    <string name="notes_fragment_project">Project</string>
     <string name="notes_fragment_description">Description</string>
     <string name="notes_fragment_btn">Add</string>
     <!-- TODO: Remove or change this placeholder text -->
@@ -14,4 +15,10 @@
     <string name="profile_save_btn">Save</string>
     <string name="profile_name_hint">Enter your name</string>
     <string name="profile_login_hint">Enter your login</string>
+    <string name="project_name_hint">Enter name of project</string>
+    <string name="project_date_hint">Choose the end of project</string>
+    <!-- Bottom sheet project types -->
+    <string name="project_types_home">Home</string>
+    <string name="project_types_work">Work</string>
+    <string name="project_types_school">School</string>
 </resources>

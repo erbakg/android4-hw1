@@ -4,11 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.home.view_pager.DoneNotesFragment">
+    tools:context=".ui.notes.view_pager.DoneNotesFragment">
     <androidx.recyclerview.widget.RecyclerView
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/rv_notes"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="42dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:listitem="@layout/item_note"/>

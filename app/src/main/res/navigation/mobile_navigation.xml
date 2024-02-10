@@ -11,18 +11,19 @@
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_navigation_home_to_noteFragment"
-            app:destination="@id/noteFragment" />
-        <action
             android:id="@+id/action_navigation_home_to_onboardingFragment"
             app:destination="@id/onboardingFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.android4_1.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notification"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_notes_list"
+        android:name="com.example.android4_1.ui.notes.NotesListFragment"
+        android:label="@string/title_notes_list"
+        tools:layout="@layout/fragment_notes_list" >
+        <action
+            android:id="@+id/action_navigation_notes_list_to_noteFragment"
+            app:destination="@id/noteFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_profile"

@@ -11,8 +11,9 @@ import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android4_1.R
 import com.example.android4_1.databinding.ItemNoteBinding
-import com.example.android4_1.models.Note
-import com.example.android4_1.ui.home.view_pager.OnNoteItemClick
+import com.example.android4_1.data.entities.Note
+import com.example.android4_1.data.entities.NoteTypes
+import com.example.android4_1.ui.notes.view_pager.OnNoteItemClick
 
 
 class NoteItemAdapter(
@@ -28,7 +29,7 @@ class NoteItemAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val noteItem = notesList[position]
         holder.bind(noteItem, position, onNoteItemClick)
-        if (notesList[position].inProgress) {
+        if (notesList[position].type == NoteTypes.IN_PROGRESS) {
             holder.itemView.setBackgroundColor(
                 ContextCompat.getColor(
                     holder.itemView.context,
@@ -46,9 +47,9 @@ class NoteItemAdapter(
                 id = noteItem.id.toString(),
                 title = noteItem.title,
                 description = noteItem.description,
-                date = noteItem.date.toString(),
+                projectId = noteItem.projectId.toString(),
                 navController = findNavController(holder.itemView),
-                destination = R.id.action_navigation_home_to_noteFragment
+                destination = R.id.action_navigation_notes_list_to_noteFragment
             )
         }
     }
@@ -68,10 +69,9 @@ class ViewHolder(
         binding.tvTitle.text = noteItem.title
         binding.tvDesc.text = noteItem.description
 
-        if (!noteItem.done && !noteItem.inProgress) {
+        if (noteItem.type == NoteTypes.TO_DO) {
             binding.btnToProgress.setImageResource(R.drawable.ic_start_24)
-        } else if (noteItem.inProgress) {
-            Log.d("haha", "bind: "+ noteItem.title.toString())
+        } else if (noteItem.type == NoteTypes.IN_PROGRESS) {
             binding.btnToProgress.setImageResource(R.drawable.ic_done_all_24)
         } else {
             Log.d("haha", "bind: "+ noteItem.title.toString())
